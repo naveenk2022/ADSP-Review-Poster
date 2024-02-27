@@ -24,13 +24,17 @@ library(kableExtra)
 library(tidyverse)
 library(extrafont)
 theme_set(theme_bw()) 
-loadfonts()
 ```
 
 
+```{r}
+font_import(paths = 'fonts', prompt = FALSE)
+loadfonts()
+```
 
 ```{r, fig.height=10, fig.width=18}
 log_1 <- read_csv("log_VF1.csv", show_col_types = FALSE)
+log_1$Feature <- gsub("apc_","",as.character(log_1$Feature))
 ggplot(log_1, aes(x = Feature, y = Effect)) +
   geom_point(col = "#2b8cbe") +
   geom_hline(yintercept = 1.0, linetype = "dotted", col = "red") +
@@ -41,15 +45,18 @@ ggplot(log_1, aes(x = Feature, y = Effect)) +
        x = "", y = "Effect",
        subtitle = "A variant fails VFlag 1 if GATK 'FILTER'!= 'PASS' or is in tranche >=99.7%. ",
        caption = "Variants taken from Chromosomes 21 and 22 from the ADSP R4 data release.") + 
-  theme(text=element_text(size=22, family="Work Sans")) 
+  theme(text=element_text(size=22, family="Work Sans"),
+        axis.text.x = element_text(angle = 60, hjust = 1, 
+                                  face = ifelse(log_1$Lower_95 < 1 & log_1$Upper_95 > 1, "plain", "bold")))
 ggsave("log_v1.png", width = 16, height = 10, dpi = 2000)
 
 ```
 
 
 
-```{r, fig.height=14, fig.width=20}
+```{r, fig.height=10, fig.width=18, warning=FALSE}
 log_2 <- read_csv("log_VF2.csv", show_col_types = FALSE)
+log_2$Feature <- gsub("apc_","",as.character(log_2$Feature))
 ggplot(log_2, aes(x = Feature, y = Effect)) +
   geom_point(col = "#2b8cbe") +
   geom_hline(yintercept = 1.0, linetype = "dotted", col = "red") +
@@ -60,7 +67,9 @@ ggplot(log_2, aes(x = Feature, y = Effect)) +
        x = "", y = "Effect",
        subtitle = "A variant fails VFlag 2 if all genotypes have DP<10 and/or GQ<20. ",
        caption = "Variants taken from Chromosomes 21 and 22 from the ADSP R4 data release.") + 
-  theme(text=element_text(size=22, family="Work Sans")) 
+  theme(text=element_text(size=22, family="Work Sans"),
+        axis.text.x = element_text(angle = 60, hjust = 1, 
+                                  face = ifelse(log_1$Lower_95 < 1 & log_1$Upper_95 > 1, "plain", "bold")))
 ggsave("log_v2.png", width = 16, height = 10, dpi = 2000)
 
 ```
@@ -68,6 +77,7 @@ ggsave("log_v2.png", width = 16, height = 10, dpi = 2000)
 
 ```{r, fig.height=14, fig.width=20}
 log_3 <- read_csv("log_VF3.csv", show_col_types = FALSE)
+log_3$Feature <- gsub("apc_","",as.character(log_3$Feature))
 ggplot(log_3, aes(x = Feature, y = Effect)) +
   geom_point(col = "#2b8cbe") +
   geom_hline(yintercept = 1.0, linetype = "dotted", col = "red") +
@@ -78,7 +88,9 @@ ggplot(log_3, aes(x = Feature, y = Effect)) +
        x = "", y = "Effect",
        subtitle = "A variant fails VFlag 3 if MAF = 0. ",
        caption = "Variants taken from Chromosomes 21 and 22 from the ADSP R4 data release.") + 
-  theme(text=element_text(size=22, family="Work Sans")) 
+  theme(text=element_text(size=22, family="Work Sans"),
+        axis.text.x = element_text(angle = 60, hjust = 1, 
+                                  face = ifelse(log_1$Lower_95 < 1 & log_1$Upper_95 > 1, "plain", "bold")))
 ggsave("log_v3.png", width = 16, height = 10, dpi = 2000)
 
 ```
@@ -86,6 +98,7 @@ ggsave("log_v3.png", width = 16, height = 10, dpi = 2000)
 
 ```{r, fig.height=14, fig.width=20}
 log_4 <- read_csv("log_VF4.csv", show_col_types = FALSE)
+log_4$Feature <- gsub("apc_","",as.character(log_4$Feature))
 ggplot(log_4, aes(x = Feature, y = Effect)) +
   geom_point(col = "#2b8cbe") +
   geom_hline(yintercept = 1.0, linetype = "dotted", col = "red") +
@@ -96,7 +109,9 @@ ggplot(log_4, aes(x = Feature, y = Effect)) +
        x = "", y = "Effect",
        subtitle = "A variant fails VFlag 4 if Call Rate <= 80%. ",
        caption = "Variants taken from Chromosomes 21 and 22 from the ADSP R4 data release.") + 
-  theme(text=element_text(size=22, family="Work Sans")) 
+  theme(text=element_text(size=22, family="Work Sans"),
+        axis.text.x = element_text(angle = 60, hjust = 1, 
+                                  face = ifelse(log_1$Lower_95 < 1 & log_1$Upper_95 > 1, "plain", "bold")))
 ggsave("log_v4.png", width = 16, height = 10, dpi = 2000)
 
 ```
@@ -105,6 +120,7 @@ ggsave("log_v4.png", width = 16, height = 10, dpi = 2000)
 
 ```{r, fig.height=14, fig.width=17}
 log_5 <- read_csv("log_VF5.csv", show_col_types = FALSE)
+log_5$Feature <- gsub("apc_","",as.character(log_5$Feature))
 ggplot(log_5, aes(x = Feature, y = Effect)) +
   geom_point(col = "#2b8cbe") +
   geom_hline(yintercept = 1.0, linetype = "dotted", col = "red") +
@@ -115,7 +131,9 @@ ggplot(log_5, aes(x = Feature, y = Effect)) +
        x = "", y = "Effect",
        subtitle = "A variant fails VFlag 5 if Average Mean Depth > 500 reads. ",
        caption = "Variants taken from Chromosomes 21 and 22 from the ADSP R4 data release.") + 
-  theme(text=element_text(size=22, family="Work Sans")) 
+  theme(text=element_text(size=22, family="Work Sans"),
+        axis.text.x = element_text(angle = 60, hjust = 1, 
+                                  face = ifelse(log_1$Lower_95 < 1 & log_1$Upper_95 > 1, "plain", "bold")))
 ggsave("log_v5.png",width = 16, height = 10, dpi = 2000)
 
 ```
