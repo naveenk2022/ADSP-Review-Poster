@@ -28,13 +28,15 @@ theme_set(theme_bw())
 
 
 ```{r}
-font_import(paths = 'fonts', prompt = FALSE)
+#font_import(paths = 'fonts', prompt = FALSE)
 loadfonts()
 ```
 
 ```{r, fig.height=10, fig.width=18}
 log_1 <- read_csv("log_VF1.csv", show_col_types = FALSE)
 log_1$Feature <- gsub("apc_","",as.character(log_1$Feature))
+log_1 <- log_1 %>%
+  mutate(includes_1 = ifelse(Lower_95 <= 1 & Upper_95 >= 1, TRUE, FALSE))
 ggplot(log_1, aes(x = Feature, y = Effect)) +
   geom_point(col = "#2b8cbe") +
   geom_hline(yintercept = 1.0, linetype = "dotted", col = "red") +
@@ -47,16 +49,16 @@ ggplot(log_1, aes(x = Feature, y = Effect)) +
        caption = "Variants taken from Chromosomes 21 and 22 from the ADSP R4 data release.") + 
   theme(text=element_text(size=22, family="Work Sans"),
         axis.text.x = element_text(angle = 60, hjust = 1, 
-                                  face = ifelse(log_1$Lower_95 <= 1 & log_1$Upper_95 >= 1, "plain", "bold")))
+                                  face = ifelse(log_1$includes_1 == FALSE, "bold", "plain")))
 ggsave("log_v1.png", width = 16, height = 10, dpi = 2000)
 
 ```
 
-
-
 ```{r, fig.height=10, fig.width=18, warning=FALSE}
 log_2 <- read_csv("log_VF2.csv", show_col_types = FALSE)
 log_2$Feature <- gsub("apc_","",as.character(log_2$Feature))
+log_2 <- log_2 %>%
+  mutate(includes_1 = ifelse(Lower_95 <= 1 & Upper_95 >= 1, TRUE, FALSE))
 ggplot(log_2, aes(x = Feature, y = Effect)) +
   geom_point(col = "#2b8cbe") +
   geom_hline(yintercept = 1.0, linetype = "dotted", col = "red") +
@@ -69,15 +71,16 @@ ggplot(log_2, aes(x = Feature, y = Effect)) +
        caption = "Variants taken from Chromosomes 21 and 22 from the ADSP R4 data release.") + 
   theme(text=element_text(size=22, family="Work Sans"),
         axis.text.x = element_text(angle = 60, hjust = 1, 
-                                  face = ifelse(log_1$Lower_95 <= 1 & log_1$Upper_95 >= 1, "plain", "bold")))
+                                  face = ifelse(log_2$includes_1 == FALSE, "bold", "plain")))
 ggsave("log_v2.png", width = 16, height = 10, dpi = 2000)
 
 ```
 
-
 ```{r, fig.height=14, fig.width=20}
 log_3 <- read_csv("log_VF3.csv", show_col_types = FALSE)
 log_3$Feature <- gsub("apc_","",as.character(log_3$Feature))
+log_3 <- log_3 %>%
+  mutate(includes_1 = ifelse(Lower_95 <= 1 & Upper_95 >= 1, TRUE, FALSE))
 ggplot(log_3, aes(x = Feature, y = Effect)) +
   geom_point(col = "#2b8cbe") +
   geom_hline(yintercept = 1.0, linetype = "dotted", col = "red") +
@@ -90,15 +93,16 @@ ggplot(log_3, aes(x = Feature, y = Effect)) +
        caption = "Variants taken from Chromosomes 21 and 22 from the ADSP R4 data release.") + 
   theme(text=element_text(size=22, family="Work Sans"),
         axis.text.x = element_text(angle = 60, hjust = 1, 
-                                  face = ifelse(log_1$Lower_95 <= 1 & log_1$Upper_95 >= 1, "plain", "bold")))
+                                  face = ifelse(log_3$includes_1 == FALSE, "bold", "plain")))
 ggsave("log_v3.png", width = 16, height = 10, dpi = 2000)
 
 ```
 
-
 ```{r, fig.height=14, fig.width=20}
 log_4 <- read_csv("log_VF4.csv", show_col_types = FALSE)
 log_4$Feature <- gsub("apc_","",as.character(log_4$Feature))
+log_4 <- log_4 %>%
+  mutate(includes_1 = ifelse(Lower_95 <= 1 & Upper_95 >= 1, TRUE, FALSE))
 ggplot(log_4, aes(x = Feature, y = Effect)) +
   geom_point(col = "#2b8cbe") +
   geom_hline(yintercept = 1.0, linetype = "dotted", col = "red") +
@@ -111,16 +115,16 @@ ggplot(log_4, aes(x = Feature, y = Effect)) +
        caption = "Variants taken from Chromosomes 21 and 22 from the ADSP R4 data release.") + 
   theme(text=element_text(size=22, family="Work Sans"),
         axis.text.x = element_text(angle = 60, hjust = 1, 
-                                  face = ifelse(log_1$Lower_95 <= 1 & log_1$Upper_95 >= 1, "plain", "bold")))
+                                  face = ifelse(log_4$includes_1 == FALSE, "bold", "plain")))
 ggsave("log_v4.png", width = 16, height = 10, dpi = 2000)
 
 ```
 
-
-
 ```{r, fig.height=14, fig.width=17}
 log_5 <- read_csv("log_VF5.csv", show_col_types = FALSE)
 log_5$Feature <- gsub("apc_","",as.character(log_5$Feature))
+log_5 <- log_5 %>%
+  mutate(includes_1 = ifelse(Lower_95 <= 1 & Upper_95 >= 1, TRUE, FALSE))
 ggplot(log_5, aes(x = Feature, y = Effect)) +
   geom_point(col = "#2b8cbe") +
   geom_hline(yintercept = 1.0, linetype = "dotted", col = "red") +
@@ -133,7 +137,7 @@ ggplot(log_5, aes(x = Feature, y = Effect)) +
        caption = "Variants taken from Chromosomes 21 and 22 from the ADSP R4 data release.") + 
   theme(text=element_text(size=22, family="Work Sans"),
         axis.text.x = element_text(angle = 60, hjust = 1, 
-                                  face = ifelse(log_1$Lower_95 <= 1 & log_1$Upper_95 >= 1, "plain", "bold")))
+                                  face = ifelse(log_5$includes_1 == FALSE, "bold", "plain")))
 ggsave("log_v5.png",width = 16, height = 10, dpi = 2000)
 
 ```
