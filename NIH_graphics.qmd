@@ -4,7 +4,6 @@ format: html
 editor: visual
 ---
 
-
 ```{r, message=FALSE}
 knitr::opts_chunk$set(comment = NA) 
 library(broom)
@@ -26,13 +25,12 @@ library(extrafont)
 theme_set(theme_bw()) 
 ```
 
-
-```{r}
-#font_import(paths = 'fonts', prompt = FALSE)
+```{r, message=FALSE}
+font_import(paths = 'fonts', prompt = FALSE)
 loadfonts()
 ```
 
-```{r, fig.height=10, fig.width=18}
+```{r, fig.height=16, fig.width=24}
 log_1 <- read_csv("log_VF1.csv", show_col_types = FALSE)
 log_1$Feature <- gsub("apc_","",as.character(log_1$Feature))
 log_1 <- log_1 %>%
@@ -47,10 +45,10 @@ ggplot(log_1, aes(x = Feature, y = Effect)) +
        x = "", y = "Effect",
        subtitle = "A variant fails VFlag 1 if GATK 'FILTER'!= 'PASS' or is in tranche >=99.7%. ",
        caption = "Variants taken from Chromosomes 21 and 22 from the ADSP R4 data release.") + 
-  theme(text=element_text(size=22, family="Work Sans"),
+  theme(text=element_text(size=26, family="Work Sans"),
         axis.text.x = element_text(angle = 60, hjust = 1, 
                                   face = ifelse(log_1$includes_1 == FALSE, "bold", "plain")))
-ggsave("log_v1.png", width = 16, height = 10, dpi = 2000)
+ggsave("log_v1.png", width = 24, height = 14, dpi = 2000)
 
 ```
 
@@ -141,4 +139,3 @@ ggplot(log_5, aes(x = Feature, y = Effect)) +
 ggsave("log_v5.png",width = 16, height = 10, dpi = 2000)
 
 ```
-
